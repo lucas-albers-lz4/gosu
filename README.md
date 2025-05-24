@@ -6,6 +6,69 @@ I FORKED THIS TO:
 
 2.) Enable some linting rules to fix obvious lint issues. That is it.
 
+3.) This fixes these CVE's
+
+CVE-2024-24790: Fix version 1.21.11
+CVE-2023-24538: Fix version 1.19.8
+CVE-2023-24540: Fix version 1.19.9
+CVE-2025-22871: Fix version 1.23.8
+CVE-2022-30580: Fix version 1.18.3
+CVE-2023-29403: Fix version 1.19.10
+CVE-2023-45283: Fix version 1.20.11
+CVE-2022-41722: Fix version 1.19.6
+CVE-2023-24534: Fix version 1.19.8
+CVE-2024-34158: Fix version 1.22.7
+CVE-2023-24536: Fix version 1.19.8
+CVE-2022-41723: Fix version 1.19.6
+CVE-2022-2880: Fix version 1.18.7
+CVE-2022-30630: Fix version 1.18.4
+CVE-2022-30633: Fix version 1.18.4
+CVE-2022-29804: Fix version 1.18.3
+CVE-2022-32189: Fix version 1.18.5
+CVE-2022-30632: Fix version 1.18.4
+CVE-2023-45287: Fix version 1.20.0
+CVE-2022-30634: Fix version 1.18.3
+CVE-2022-41715: Fix version 1.18.7
+CVE-2022-27664: Fix version 1.18.6
+CVE-2024-34156: Fix version 1.22.7
+CVE-2022-30635: Fix version 1.18.4
+CVE-2022-2879: Fix version 1.18.7
+CVE-2024-24784: Fix version 1.21.8
+CVE-2024-24791: Fix version 1.21.12
+CVE-2023-24537: Fix version 1.19.8
+CVE-2022-41724: Fix version 1.19.6
+CVE-2023-45288: Fix version 1.21.9
+CVE-2023-39325: Fix version 1.20.10
+CVE-2022-28131: Fix version 1.18.4
+CVE-2022-41725: Fix version 1.19.6
+CVE-2023-44487: Fix version 1.20.10
+CVE-2022-30631: Fix version 1.18.4
+CVE-2022-41716: Fix version 1.18.8
+CVE-2022-41720: Fix version 1.18.9
+CVE-2023-29400: Fix version 1.19.9
+CVE-2023-24539: Fix version 1.19.9
+CVE-2022-1705: Fix version 1.18.4
+CVE-2023-45290: Fix version 1.21.8
+CVE-2022-32148: Fix version 1.18.4
+CVE-2023-29406: Fix version 1.19.11
+CVE-2023-39318: Fix version 1.20.8
+CVE-2023-39319: Fix version 1.20.8
+CVE-2024-45336: Fix version 1.22.11
+CVE-2024-45341: Fix version 1.22.11
+CVE-2024-24783: Fix version 1.21.8
+CVE-2022-1962: Fix version 1.18.4
+CVE-2024-24789: Fix version 1.21.11
+CVE-2024-24785: Fix version 1.21.8
+CVE-2023-45284: Fix version 1.20.11
+CVE-2023-39326: Fix version 1.20.12
+CVE-2022-41717: Fix version 1.18.9
+CVE-2023-29409: Fix version 1.19.12
+CVE-2023-24532: Fix version 1.19.7
+CVE-2023-45289: Fix version 1.21.8
+CVE-2024-34155: Fix version 1.22.7
+CVE-2025-22866: Fix version 1.22.12
+CVE-2022-30629: Fix version 1.18.3
+
 This is a simple tool grown out of the simple fact that `su` and `sudo` have very strange and often annoying TTY and signal-forwarding behavior.  They're also somewhat complex to setup and use (especially in the case of `sudo`), which allows for a great deal of expressivity, but falls flat if all you need is "run this specific application as this specific user and get out of the pipeline".
 
 The core of how `gosu` works is stolen directly from how Docker/libcontainer itself starts an application inside a container (and in fact, is using the `/etc/passwd` processing code directly from libcontainer's codebase).
