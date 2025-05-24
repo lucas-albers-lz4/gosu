@@ -16,10 +16,43 @@ jobs:
             goos: linux
             goarm: ""
             target_arch: amd64
+          - goarch: 386
+            goos: linux
+            goarm: ""
+            target_arch: i386
+          - goarch: arm
+            goos: linux
+            goarm: 5
+            target_arch: armel
+          - goarch: arm
+            goos: linux
+            goarm: 6
+            target_arch: armhf
+          # ARM7 is commented out in the Dockerfile, so let's omit it for now unless requested
+          #- goarch: arm
+          #  goos: linux
+          #  goarm: 7
+          #  target_arch: armhf-v7
           - goarch: arm64
             goos: linux
             goarm: ""
             target_arch: arm64
+          - goarch: mips64le
+            goos: linux
+            goarm: ""
+            target_arch: mips64el
+          - goarch: ppc64le
+            goos: linux
+            goarm: ""
+            target_arch: ppc64el
+          - goarch: riscv64
+            goos: linux
+            goarm: ""
+            target_arch: riscv64
+          - goarch: s390x
+            goos: linux
+            goarm: ""
+            target_arch: s390x
 
     steps:
       - name: Checkout
