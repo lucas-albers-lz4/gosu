@@ -1,4 +1,4 @@
-FROM golang:1.20.5-bookworm
+FROM golang:1.24.3-bookworm
 
 RUN set -eux; \
 	apt-get update; \
@@ -28,7 +28,7 @@ RUN set -eux; \
 	chmod +x /usr/local/bin/gosu-build-and-test.sh
 
 # disable CGO for ALL THE THINGS (to help ensure no libc)
-ENV CGO_ENABLED 0
+ENV CGO_ENABLED=0
 
 WORKDIR /go/src/github.com/tianon/gosu
 
