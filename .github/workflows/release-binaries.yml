@@ -98,19 +98,24 @@ jobs:
 
       - name: Sign binaries
         run: |
-          find artifacts -type f -name 'gosu-*' -exec gpg --armor --detach-sign --output {}.asc {} \;
+          find artifacts -type f -name 'gosu-*' -exec gpg --batch --yes --pinentry-mode loopback --passphrase "$GPG_PASSPHRASE" --armor --detach-sign --output {}.asc {} \;
+        env:
+          GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
+
+      - name: List artifacts
+        run: ls -lR artifacts
 
       - name: Get tag name
         id: get_version
-        run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
+        run: echo TAG_NAME=${GITHUB_REF/refs\/tags\//} >> $GITHUB_ENV
 
       - name: Create Release and Upload Assets
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.get_version.outputs.TAG_NAME }}
-          name: Release ${{ steps.get_version.outputs.TAG_NAME }}
+          tag_name: ${{ env.TAG_NAME }}
+          name: Release ${{ env.TAG_NAME }}
           draft: false
           prerelease: false
           files: |
-            artifacts/*/gosu-*
-            artifacts/*/gosu-*.asc 
+            artifacts/**/gosu-*
+            artifacts/**/gosu-*.asc 
