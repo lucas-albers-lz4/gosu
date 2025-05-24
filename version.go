@@ -2,4 +2,4 @@
 package main
 
 // Version is the current version of gosu.
-const Version = "1.22"
+const Version = "1.23"
