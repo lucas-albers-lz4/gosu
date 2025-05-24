@@ -1,6 +1,6 @@
 # gosu
 
-I FORKED THIS TO 
+I FORKED THIS TO: 
 
 1.) Build and publish images built with latest go
 
