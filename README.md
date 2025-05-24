@@ -4,7 +4,7 @@ I FORKED THIS TO
 
 1.) Build and publish images built with latest go
 
-2.) Enable some lintig rules to fix obvious lint issues.
+2.) Enable some linting rules to fix obvious lint issues.
 That is it.
 
 This is a simple tool grown out of the simple fact that `su` and `sudo` have very strange and often annoying TTY and signal-forwarding behavior.  They're also somewhat complex to setup and use (especially in the case of `sudo`), which allows for a great deal of expressivity, but falls flat if all you need is "run this specific application as this specific user and get out of the pipeline".
