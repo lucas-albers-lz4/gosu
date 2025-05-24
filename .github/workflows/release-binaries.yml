@@ -33,7 +33,7 @@ jobs:
       - name: Build binary
         run: |
           CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} \
-          go build -v -trimpath -ldflags '-d -w' -o gosu-${{ matrix.target_arch }} main.go
+          go build -v -trimpath -ldflags '-d -w' -o gosu-${{ matrix.target_arch }} 
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
