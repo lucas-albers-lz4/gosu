@@ -36,7 +36,6 @@ linters:
     - misspell
     - goconst
     - predeclared
-    - lll
     - mnd
     - dupl
     - funlen

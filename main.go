@@ -34,18 +34,28 @@ Usage: ` + self + ` user-spec command [args]
 }
 
 func exit(code int, w *os.File, ss ...string) {
+	const exitWriteError = 2
 	for i, s := range ss {
 		if i > 0 {
 			if _, err := w.Write([]byte{' '}); err != nil {
-				// Handle error if necessary, for now we can ignore it or log it
+				if _, serr := os.Stderr.WriteString("error: failed to write to output\n"); serr != nil {
+					os.Exit(exitWriteError)
+				}
+				os.Exit(exitWriteError)
 			}
 		}
-		if _, err := w.Write([]byte(s)); err != nil {
-			// Handle error if necessary
+		if _, err := w.WriteString(s); err != nil {
+			if _, serr := os.Stderr.WriteString("error: failed to write to output\n"); serr != nil {
+				os.Exit(exitWriteError)
+			}
+			os.Exit(exitWriteError)
 		}
 	}
 	if _, err := w.Write([]byte{'\n'}); err != nil {
-		// Handle error if necessary
+		if _, serr := os.Stderr.WriteString("error: failed to write to output\n"); serr != nil {
+			os.Exit(exitWriteError)
+		}
+		os.Exit(exitWriteError)
 	}
 	os.Exit(code)
 }
@@ -84,8 +94,12 @@ func main() {
 	}
 
 	// clear HOME so that SetupUser will set it
+	const exitWriteError = 2
 	if err := os.Unsetenv("HOME"); err != nil {
-		// Handle error if necessary, for now we can ignore or log
+		if _, serr := os.Stderr.WriteString("error: failed to unset HOME environment variable\n"); serr != nil {
+			os.Exit(exitWriteError)
+		}
+		os.Exit(exitWriteError)
 	}
 
 	if err := SetupUser(os.Args[1]); err != nil {
