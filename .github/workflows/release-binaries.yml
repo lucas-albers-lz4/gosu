@@ -49,10 +49,6 @@ jobs:
             goos: linux
             goarm: ""
             target_arch: riscv64
-          - goarch: s390x
-            goos: linux
-            goarm: ""
-            target_arch: s390x
 
     steps:
       - name: Checkout
