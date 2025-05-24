@@ -1,0 +1,105 @@
+name: Release Binaries
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    name: Build ${{ matrix.target_arch }}
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - goarch: amd64
+            goos: linux
+            goarm: ""
+            target_arch: amd64
+          - goarch: 386
+            goos: linux
+            goarm: ""
+            target_arch: i386
+          - goarch: arm
+            goos: linux
+            goarm: 5
+            target_arch: armel
+          - goarch: arm
+            goos: linux
+            goarm: 6
+            target_arch: armhf
+          # ARM7 is commented out in the Dockerfile, so let's omit it for now unless requested
+          #- goarch: arm
+          #  goos: linux
+          #  goarm: 7
+          #  target_arch: armhf-v7
+          - goarch: arm64
+            goos: linux
+            goarm: ""
+            target_arch: arm64
+          - goarch: mips64le
+            goos: linux
+            goarm: ""
+            target_arch: mips64el
+          - goarch: ppc64le
+            goos: linux
+            goarm: ""
+            target_arch: ppc64el
+          - goarch: riscv64
+            goos: linux
+            goarm: ""
+            target_arch: riscv64
+          - goarch: s390x
+            goos: linux
+            goarm: ""
+            target_arch: s390x
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Go 1.24
+        uses: actions/setup-go@v5
+        with:
+          go-version: 1.24.x
+
+      - name: Build binary
+        run: |
+          CGO_ENABLED=0 GOOS=${{ matrix.goos }} GOARCH=${{ matrix.goarch }} GOARM=${{ matrix.goarm }} \
+          go build -v -trimpath -ldflags '-d -w' -o gosu-${{ matrix.target_arch }} main.go
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: gosu-${{ matrix.target_arch }}
+          path: gosu-${{ matrix.target_arch }}
+
+  release:
+    name: Create GitHub Release
+    runs-on: ubuntu-latest
+    needs: build # Ensure build job completes successfully
+    permissions:
+      contents: write # Allow writing to releases
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Get tag name
+        id: get_version
+        run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
+
+      - name: Create Release and Upload Assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.get_version.outputs.TAG_NAME }}
+          name: Release ${{ steps.get_version.outputs.TAG_NAME }}
+          draft: false
+          prerelease: false
+          files: |
+            artifacts/*/gosu-* 
