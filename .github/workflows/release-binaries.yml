@@ -118,4 +118,3 @@ jobs:
           prerelease: false
           files: |
             artifacts/**/gosu-*
-            artifacts/**/gosu-*.asc 
