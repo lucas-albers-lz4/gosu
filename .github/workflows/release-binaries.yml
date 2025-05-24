@@ -90,6 +90,16 @@ jobs:
         with:
           path: artifacts
 
+      - name: Import GPG key
+        run: |
+          echo "$GPG_PRIVATE_KEY" | gpg --batch --import
+        env:
+          GPG_PRIVATE_KEY: ${{ secrets.GPG_PRIVATE_KEY }}
+
+      - name: Sign binaries
+        run: |
+          find artifacts -type f -name 'gosu-*' -exec gpg --armor --detach-sign --output {}.asc {} \;
+
       - name: Get tag name
         id: get_version
         run: echo ::set-output name=TAG_NAME::${GITHUB_REF/refs\/tags\//}
@@ -102,4 +112,5 @@ jobs:
           draft: false
           prerelease: false
           files: |
-            artifacts/*/gosu-* 
+            artifacts/*/gosu-*
+            artifacts/*/gosu-*.asc 
