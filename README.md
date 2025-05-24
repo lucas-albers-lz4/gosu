@@ -1,7 +1,9 @@
 # gosu
 
 I FORKED THIS TO 
+
 1.) Build and publish images built with latest go
+
 2.) Enable some lintig rules to fix obvious lint issues.
 That is it.
 
